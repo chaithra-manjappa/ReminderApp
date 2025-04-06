@@ -1,4 +1,4 @@
-name: Manual Workflow
+name: iOS Build Pipeline
 
 on:
   push:
@@ -8,19 +8,26 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
+    - name: Set up Ruby (required for CocoaPods)
+      uses: ruby/setup-ruby@v1
       with:
-        node-version: '14'
+        ruby-version: 2.7
 
-    - name: Install dependencies
-      run: npm install
+    - name: Install CocoaPods dependencies
+      run: |
+        sudo gem install cocoapods
+        pod install
 
-    - name: Run tests
-      run: npm test
+    - name: Build the app
+      run: |
+        xcodebuild clean build \
+          -workspace YourApp.xcworkspace \
+          -scheme YourAppScheme \
+          -sdk iphonesimulator \
+          -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
