@@ -17,7 +17,7 @@ jobs:
     - name: Build the app
       run: |
         xcodebuild clean build \
-          -project Reminder App.xcodeproj \
-          -scheme Reminder App \
+          -project ReminderApp.xcodeproj \
+          -scheme ReminderApp \
           -sdk iphonesimulator \
           -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
