@@ -14,20 +14,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Ruby (required for CocoaPods)
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7
-
-    - name: Install CocoaPods dependencies
-      run: |
-        sudo gem install cocoapods
-        pod install
-
     - name: Build the app
       run: |
         xcodebuild clean build \
-          -workspace YourApp.xcworkspace \
-          -scheme YourAppScheme \
+          -project Reminder App.xcodeproj \
+          -scheme Reminder App \
           -sdk iphonesimulator \
           -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
